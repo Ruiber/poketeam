@@ -19,6 +19,10 @@ dragon = Type('Dragon')
 dark = Type('Dark')
 fairy = Type('Fairy')
 
+all_types = [normal, fighting, flying, poison, ground, rock,
+            bug, ghost, steel, fire, water, grass,
+            electric, psychic, ice, dragon, dark, fairy]
+
 normal.weak = [fighting]
 normal.resistance = [] 
 normal.immune = [ghost]
@@ -146,4 +150,31 @@ fairy.half = [poison, steel, fire]
 fairy.zero = []
 
 def main():
-    pass
+    team = Team(Pokemon([fighting, fire]),
+                Pokemon([normal, flying]),
+                Pokemon([electric]),
+                Pokemon([psychic, steel]),
+                Pokemon([water]),
+                Pokemon([dark, poison]))
+
+    print('Double damage coverage: ')
+    for type in team.double:
+        print(type)
+
+    print('\n\n--------------------------------------------------------\n\n')
+
+    print('Types lacking double damage: ')
+    for type in all_types - team.double:
+        print(type)
+
+    print('\n\n--------------------------------------------------------\n\n')
+    
+    print('Resistance + Immunity coverage: ')
+    for type in set(team.resistance + team.immune):
+        print(type)
+
+    print('\n\n--------------------------------------------------------\n\n')
+
+    print('Types lacking resistance + immunity: ')
+    for type in all_types - (team.resistance + team.immune):
+        print(type)
